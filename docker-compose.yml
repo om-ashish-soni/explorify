@@ -1,0 +1,22 @@
+services:
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: explorify
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - '5432:5432'
+  explorify:
+    image: explorify
+    depends_on:
+      - postgres
+      - mongo
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    ports:
+      - '8080:8080'
